@@ -14,15 +14,14 @@
 </c:set>
 
 <!--Tabla-->    
-<c:set var="cabeceraTabla" value="Ruc,Nombre,Persona de Contacto,Telefono,Opciones"></c:set>
+<c:set var="cabeceraTabla" value="Nombre,Categoria,Stock,Opciones"></c:set>
 <c:set var="cuerpoTabla">
     <c:forEach items="${data}" var="producto">
         <tr>
             <td class="d-none id">${producto.getId()}</td>
-            <td class="ruc">${producto.getNombre()}</td>
-            <td class="nombre">${producto.getCategoria()}</td>
-            <td class="persona_contacto">${empty proveedor.getPersonaContacto() ? 'Sin Contacto' : proveedor.getPersonaContacto()}</td>
-            <td class="telefono">${empty proveedor.getTelefono() ? 'Sin telefóno' : proveedor.getTelefono()}</td>
+            <td class="nombre">${producto.getNombre()}</td>
+            <td class="categoria">${producto.getCategoria().getNombre()}</td>
+            <td class="stock">${producto.getStock()}</td>
             <td>
                 <button type="button" class="btn btn-warning btnEditar" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-pencil"></i></button>
                 <button type="button" class="btn btn-danger btnEliminar"><i class="fa-solid fa-trash"></i></button>
@@ -36,26 +35,24 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="ruc" class="form-label">Ruc</label>
-                <input type="text" name="ruc" id="ruc" class="form-control" required/>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" name="nombre" id="nombre" class="form-control" required/>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="persona_contacto" class="form-label">Persona de Contacto</label>
-                <input type="text" name="persona_contacto" id="persona_contacto" class="form-control"/>
+                <label for="tipodept" class="form-label">Categoria</label>
+                <select name="categoria" id="categoria" class="form-select">
+                    <c:forEach items="${categorias}" var="categoria">
+                        <option value="${categoria.getId()}">${categoria.getNombre()}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="telefono" class="form-label">Telefono</label>
-                <input type="text" name="telefono" id="telefono" class="form-control"/>
+                <label for="stock" class="form-label">Stock</label>
+                <input type="number" name="stock" id="stock" value="0" class="form-control"/>
             </div>
         </div>
     </div>

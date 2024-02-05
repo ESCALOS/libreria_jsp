@@ -37,7 +37,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="dni" class="form-label">Dni</label>
-                <input type="text" name="dni" id="dni" class="form-control" />
+                <input type="number" name="dni" id="dni" class="form-control" />
             </div>
         </div>
         <div class="col-sm-6">
@@ -49,7 +49,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="email" class="form-label">Correo</label>
-                <input type="text" name="email" id="email" class="form-control"/>
+                <input type="email" name="email" id="email" class="form-control"/>
             </div>
         </div>
         <div class="col-sm-6">

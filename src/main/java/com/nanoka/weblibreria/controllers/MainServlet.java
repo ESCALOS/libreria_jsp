@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String page = request.getParameter("page") == null ? "clientes" : (String) request.getParameter("page");
+        String page = request.getParameter("page") == null ? "productos" : (String) request.getParameter("page");
         @SuppressWarnings("rawtypes")
         ArrayList data;
         try {
@@ -52,7 +52,8 @@ public class MainServlet extends HttpServlet {
                     data = new UnidadMedidaDao().obtenerTodos();
                     break;
                 case "productos":
-                    data = new ClienteDao().obtenerTodos();
+                    data = new ProductoDao().obtenerTodosDto();
+                    request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -69,7 +70,7 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String page = request.getParameter("page") == null ? "clientes" : (String) request.getParameter("page");
+        String page = request.getParameter("page") == null ? "productos" : (String) request.getParameter("page");
         @SuppressWarnings("rawtypes")
         ArrayList data;
         RespuestaDto respuesta;
@@ -120,6 +121,24 @@ public class MainServlet extends HttpServlet {
                             .build();
                     respuesta = crud(unidadMedida, new UnidadMedidaDao(), request.getParameter("accion"));
                     data = new UnidadMedidaDao().obtenerTodos();
+                    break;
+                case "productos":
+                    int categoriaId = 0;
+                    int stock = 0;
+                    if(!"eliminar".equalsIgnoreCase(request.getParameter("accion"))) {
+                        categoriaId = Integer.parseInt(request.getParameter("categoria"));
+                        stock = Integer.parseInt(request.getParameter("stock"));
+                    }
+                    
+                    Producto producto = Producto.builder()
+                            .id(id)
+                            .nombre(nombre)
+                            .categoriaId(categoriaId)
+                            .stock(stock)
+                            .build();
+                    respuesta = crud(producto, new ProductoDao(), request.getParameter("accion"));
+                    data = new ProductoDao().obtenerTodosDto();
+                    request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -19,7 +19,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link <c:if test="${param.page eq 'productos'}">active</c:if> aria-current="page" href="${pageContext.servletContext.contextPath}/main?page=productos">Productos</a>
+                                <a class="nav-link <c:if test="${param.page eq 'productos' or empty param.page}">active</c:if> aria-current="page" href="${pageContext.servletContext.contextPath}/main?page=productos">Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <c:if test="${param.page eq 'categorias'}">active</c:if> aria-current="page" href="${pageContext.servletContext.contextPath}/main?page=categorias">Categorías</a>
@@ -28,7 +28,7 @@
                                 <a class="nav-link <c:if test="${param.page eq 'unidades'}">active</c:if> aria-current="page" href="${pageContext.servletContext.contextPath}/main?page=unidades">Unidades</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link <c:if test="${param.page eq 'clientes' or empty param.page}">active</c:if>" href="${pageContext.servletContext.contextPath}/main?page=clientes">Clientes</a>
+                                <a class="nav-link <c:if test="${param.page eq 'clientes'}">active</c:if>" href="${pageContext.servletContext.contextPath}/main?page=clientes">Clientes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <c:if test="${param.page eq 'proveedores'}">active</c:if>" href="${pageContext.servletContext.contextPath}/main?page=proveedores">Proveedores</a>

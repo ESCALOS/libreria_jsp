@@ -3,32 +3,30 @@
 function obtenerDatos(fila) {
     return {
         id: $(fila).find(".id").text(),
-        ruc: $(fila).find(".ruc").text(),
         nombre: $(fila).find(".nombre").text(),
-        personaContacto: $(fila).find(".persona_contacto").text(),
-        telefono: $(fila).find(".telefono").text()
+        categoria: $(fila).find(".categoria").text(),
+        stock: $(fila).find(".stock").text()
     };
 }
 
 function llenarCampos(fila) {
-    let {id,ruc,nombre,personaContacto,telefono} = obtenerDatos(fila);
+    let {id,nombre,categoria,stock} = obtenerDatos(fila);
     $("#id").val(id);
-    $("#ruc").val(ruc);
     $("#nombre").val(nombre);
-    $("#persona_contacto").val(personaContacto);
-    $("#telefono").val(telefono);
+    $("#categoria option:contains(" + categoria + ")").prop('selected', true);
+    $("#stock").val(stock);
 }
 
 $(document).ready(function () {    
     $(document).on('click', '.btnGuardar', function () {
         $('form')[0].reset();
-        $(".modal-title").text("Agregar Proveedor");
+        $(".modal-title").text("Agregar Producto");
         $("#accion").val("guardar");
     });
     
     $(document).on('click', '.btnEditar', function () {
         llenarCampos($(this).closest('tr'),false);
-        $(".modal-title").text("Editar Proveedor");
+        $(".modal-title").text("Editar Producto");
         $("#accion").val("editar");
     });
     $(document).on('click', '.btnEliminar', function () {
@@ -46,6 +44,7 @@ $(document).ready(function () {
                 let fila = $(this).closest('tr');
                 $("#accion").val("eliminar");
                 $("#id").val($(fila).find(".id").text());
+                $("#stock").val("0");
                 $("#formulario").submit();
             }
         });

@@ -37,7 +37,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="ruc" class="form-label">Ruc</label>
-                <input type="text" name="ruc" id="ruc" class="form-control" required/>
+                <input type="number" name="ruc" id="ruc" class="form-control" required/>
             </div>
         </div>
         <div class="col-sm-6">
@@ -55,7 +55,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="telefono" class="form-label">Telefono</label>
-                <input type="text" name="telefono" id="telefono" class="form-control"/>
+                <input type="number" name="telefono" id="telefono" class="form-control"/>
             </div>
         </div>
     </div>

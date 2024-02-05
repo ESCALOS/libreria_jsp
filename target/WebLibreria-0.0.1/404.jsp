@@ -7,6 +7,6 @@
     </head>
     <body>
         <h1>Pagina no encontrada!</h1>
-        <a href="${pageContext.servletContext.contextPath}/main?page=clientes"">Regresar</a>
+        <a href="${pageContext.servletContext.contextPath}/main?page=productos"">Regresar</a>
     </body>
 </html>
