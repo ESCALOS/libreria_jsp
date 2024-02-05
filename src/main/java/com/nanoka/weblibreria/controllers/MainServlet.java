@@ -11,25 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.nanoka.weblibreria.dao.*;
 import com.nanoka.weblibreria.models.*;
 import com.nanoka.weblibreria.dto.RespuestaDto;
+import java.math.BigDecimal;
 
 @WebServlet(name = "MainServlet", urlPatterns = {"/main"})
 public class MainServlet extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MainServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MainServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -129,7 +114,6 @@ public class MainServlet extends HttpServlet {
                         categoriaId = Integer.parseInt(request.getParameter("categoria"));
                         stock = Integer.parseInt(request.getParameter("stock"));
                     }
-                    
                     Producto producto = Producto.builder()
                             .id(id)
                             .nombre(nombre)
@@ -137,6 +121,45 @@ public class MainServlet extends HttpServlet {
                             .stock(stock)
                             .build();
                     respuesta = crud(producto, new ProductoDao(), request.getParameter("accion"));
+                    if("guardar".equalsIgnoreCase(request.getParameter("accion")) && !respuesta.isError()){
+                        id = Integer.parseInt(respuesta.getMensaje());
+                        respuesta.setMensaje("Producto Agregado");
+                    }
+                    if(!"eliminar".equalsIgnoreCase(request.getParameter("accion"))) {
+                        int cantidadPrecios = Integer.parseInt(request.getParameter("cantidadPrecios"));
+                        for(int i = 1; i <=  cantidadPrecios; i++) {
+                            String unidadMedidaParam = request.getParameter("unidadMedida" + i);
+                            String cantidadParam = request.getParameter("cantidad" + i);
+                            String precioParam = request.getParameter("precio" + i);
+                            
+                            if(unidadMedidaParam != null && cantidadParam != null && precioParam != null) {
+                                int precioId = Integer.parseInt(request.getParameter("precioId" + i));
+                                int unidadMedidaId = Integer.parseInt(unidadMedidaParam);
+                                int cantidad = cantidadParam.isBlank() ? 0 : Integer.parseInt(cantidadParam);
+                                BigDecimal precio = precioParam.isBlank() ? BigDecimal.ZERO : new BigDecimal(precioParam);
+                                PrecioProductoDao precioProductoDao = new PrecioProductoDao();
+                                
+                                PrecioProducto precioProducto = PrecioProducto.builder()
+                                        .id(precioId)
+                                        .productoId(id)
+                                        .unidadMedidaId(unidadMedidaId)
+                                        .cantidad(cantidad)
+                                        .precio(precio)
+                                        .build();
+                                if(cantidad == 0) {
+                                    if(precioId > 0) {
+                                        precioProductoDao.eliminar(precioProducto);
+                                    }
+                                }else {
+                                    if(precioId == 0) {
+                                        precioProductoDao.insertar(precioProducto);
+                                    } else {
+                                        precioProductoDao.editar(precioProducto);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     data = new ProductoDao().obtenerTodosDto();
                     request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;

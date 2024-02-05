@@ -10,7 +10,7 @@
                     <h5 class="modal-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-dialog-scrollable mx-2">
                     ${cuerpoModal}
                 </div>
                 <div class="modal-footer">

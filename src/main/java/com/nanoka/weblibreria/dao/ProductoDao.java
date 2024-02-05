@@ -5,10 +5,12 @@ import com.nanoka.weblibreria.dto.ProductoDto;
 import com.nanoka.weblibreria.dto.RespuestaDto;
 import com.nanoka.weblibreria.models.Producto;
 import com.nanoka.weblibreria.models.Categoria;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 public class ProductoDao extends Conexion implements IDao<Producto> {
@@ -74,26 +76,29 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
         RespuestaDto respuesta = new RespuestaDto();
         try {
             this.conectar();
-            String query = "INSERT INTO Producto (nombre, categoria_id, stock) VALUES (?, ?, ?)";
-            PreparedStatement statement = this.getCon().prepareStatement(query);
-            statement.setString(1, producto.getNombre());
-            statement.setInt(2, producto.getCategoriaId());
-            statement.setInt(3, producto.getStock());
-            int filasAfectadas = statement.executeUpdate();
-            if (filasAfectadas == 0) {
+            String query = "{CALL InsertarProducto(?, ?, ?, ?)}";
+            CallableStatement callableStatement = this.getCon().prepareCall(query);
+            callableStatement.setString(1, producto.getNombre());
+            callableStatement.setInt(2, producto.getCategoriaId());
+            callableStatement.setInt(3, producto.getStock());
+            callableStatement.registerOutParameter(4, Types.INTEGER);
+            callableStatement.execute();
+            int idGenerado = callableStatement.getInt(4);
+            if (idGenerado == 0) {
                 respuesta.setError(true);
                 respuesta.setIcon("warning");
-                respuesta.setMensaje("Error inesperado");
+                respuesta.setMensaje("Error inesperado al insertar al producto");
             } else {
                 respuesta.setError(false);
                 respuesta.setIcon("success");
-                respuesta.setMensaje("Producto agregado");
+                respuesta.setMensaje(Integer.toString(idGenerado));
+                System.out.println(respuesta.getMensaje());
             }
         } catch (SQLIntegrityConstraintViolationException e) {
             errorClaveUnica(e, respuesta);
         } catch (SQLException e) {
             System.out.println("Error al insertar producto: " + e.getMessage());
-            respuesta.setError(false);
+            respuesta.setError(true);
             respuesta.setIcon("error");
             respuesta.setMensaje("Error al insertar producto: " + e.getMessage());
         } finally {
@@ -117,7 +122,7 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
             if (filasAfectadas == 0) {
                 respuesta.setError(true);
                 respuesta.setIcon("warning");
-                respuesta.setMensaje("Error inesperado");
+                respuesta.setMensaje("Error inesperado al editar el producto");
             } else {
                 respuesta.setError(false);
                 respuesta.setIcon("success");
@@ -127,7 +132,7 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
             errorClaveUnica(e, respuesta);
         } catch (SQLException e) {
             System.out.println("Error al actualizar producto: " + e.getMessage());
-            respuesta.setError(false);
+            respuesta.setError(true);
             respuesta.setIcon("error");
             respuesta.setMensaje("Error al actualizar producto: " + e.getMessage());
         } finally {
@@ -148,7 +153,7 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
             if (filasAfectadas == 0) {
                 respuesta.setError(true);
                 respuesta.setIcon("warning");
-                respuesta.setMensaje("Error inesperado");
+                respuesta.setMensaje("Error inesperado eliminar el producto");
             } else {
                 respuesta.setError(false);
                 respuesta.setIcon("success");
@@ -156,7 +161,7 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
             }
         } catch (SQLException e) {
             System.out.println("Error al eliminar producto: " + e.getMessage());
-            respuesta.setError(false);
+            respuesta.setError(true);
             respuesta.setIcon("error");
             respuesta.setMensaje("Error al insertar producto: " + e.getMessage());
         } finally {
@@ -209,7 +214,7 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
                 respuesta.setMensaje("Resale al de arriba");
             }
         } else {
-            respuesta.setMensaje("Error inesperado");
+            respuesta.setMensaje("Error inesperado por que está repetido");
         }
     }
 }
