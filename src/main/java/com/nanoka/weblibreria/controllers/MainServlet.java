@@ -1,7 +1,6 @@
 package com.nanoka.weblibreria.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.nanoka.weblibreria.dao.*;
 import com.nanoka.weblibreria.models.*;
-import com.nanoka.weblibreria.dto.RespuestaDto;
+import com.nanoka.weblibreria.dto.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @WebServlet(name = "MainServlet", urlPatterns = {"/main"})
 public class MainServlet extends HttpServlet {
@@ -19,7 +19,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String page = request.getParameter("page") == null ? "productos" : (String) request.getParameter("page");
+        String page = request.getParameter("page") == null ? "ventas" : (String) request.getParameter("page");
         @SuppressWarnings("rawtypes")
         ArrayList data;
         try {
@@ -40,6 +40,9 @@ public class MainServlet extends HttpServlet {
                     data = new ProductoDao().obtenerTodosDto();
                     request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;
+                case "ventas" :
+                    data = new VentaDtoDao().obtenerTodos();
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
@@ -55,7 +58,7 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String page = request.getParameter("page") == null ? "productos" : (String) request.getParameter("page");
+        String page = request.getParameter("page") == null ? "ventas" : (String) request.getParameter("page");
         @SuppressWarnings("rawtypes")
         ArrayList data;
         RespuestaDto respuesta;
@@ -146,7 +149,7 @@ public class MainServlet extends HttpServlet {
                                         .cantidad(cantidad)
                                         .precio(precio)
                                         .build();
-                                if(cantidad == 0) {
+                                if(cantidad <= 0) {
                                     if(precioId > 0) {
                                         precioProductoDao.eliminar(precioProducto);
                                     }
@@ -162,6 +165,43 @@ public class MainServlet extends HttpServlet {
                     }
                     data = new ProductoDao().obtenerTodosDto();
                     request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
+                    break;
+                case "ventas":
+                    ArrayList<DetalleVentaDto> detallesVenta = new ArrayList<>();
+                    PrecioProductoDto precioProducto1 = new PrecioProductoDao().obtenerPrecioProductoPorId(21);
+                    int cantidadTotal = precioProducto1.getCantidad()*2;
+                    BigDecimal subtotal = precioProducto1.getPrecio().multiply(BigDecimal.valueOf(2d));
+                    BigDecimal total = BigDecimal.ZERO;
+                    DetalleVentaDto detalleVenta1 = DetalleVentaDto.builder()
+                            .producto(precioProducto1.getProducto())
+                            .cantidadTotal(cantidadTotal)
+                            .cantidadUnidad(2)
+                            .nombreUnidad(precioProducto1.getUnidadMedida().getNombre())
+                            .precio(precioProducto1.getPrecio())
+                            .subtotal(subtotal)
+                            .build();
+                    detallesVenta.add(detalleVenta1);
+                    total = total.add(subtotal);
+                    PrecioProductoDto precioProducto2 = new PrecioProductoDao().obtenerPrecioProductoPorId(24);
+                    int cantidadTotal2 = precioProducto2.getCantidad()*5;
+                    DetalleVentaDto detalleVenta2 = DetalleVentaDto.builder()
+                            .producto(precioProducto2.getProducto())
+                            .cantidadTotal(cantidadTotal2)
+                            .cantidadUnidad(2)
+                            .nombreUnidad(precioProducto1.getUnidadMedida().getNombre())
+                            .precio(precioProducto1.getPrecio())
+                            .subtotal(precioProducto1.getPrecio().multiply(BigDecimal.valueOf(5d)))
+                            .build();
+                    detallesVenta.add(detalleVenta2);
+                    total = total.add(subtotal);
+                    VentaDto venta = VentaDto.builder()
+                            .cliente(Cliente.builder().id(1).build())
+                            .fecha(new Timestamp(System.currentTimeMillis()))
+                            .total(total)
+                            .detallesVenta(detallesVenta)
+                            .build();
+                    respuesta = crud(venta, new VentaDtoDao(),request.getParameter("accion"));
+                    data = new VentaDtoDao().obtenerTodos();
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

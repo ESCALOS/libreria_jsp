@@ -2,6 +2,7 @@ package com.nanoka.weblibreria.dto;
 
 import com.nanoka.weblibreria.models.Producto;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class MovimientoProductoDto {
     private int cantidad;
     private BigDecimal monto;
     private String razon;
-    private String fecha;
+    private Timestamp fecha;
 }

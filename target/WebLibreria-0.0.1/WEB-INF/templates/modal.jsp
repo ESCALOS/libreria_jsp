@@ -5,7 +5,7 @@
             <form id="formulario" action="${pageContext.servletContext.contextPath}/main" role="form" method="POST">
                 <input type="hidden" id="accion" name="accion" value="guardar" />
                 <input type="hidden" id="id" name="id" value="0" />
-                <input type="hidden" id="page" name="page" value="${empty param.page ? 'clientes' : param.page}" />
+                <input type="hidden" id="page" name="page" value="${empty param.page ? 'ventas' : param.page}" />
                 <div class="modal-header">
                     <h5 class="modal-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

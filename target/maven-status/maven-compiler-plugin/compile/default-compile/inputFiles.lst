@@ -16,12 +16,15 @@
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/JakartaRestConfiguration.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/ProductoDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/PrecioProductoDto.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/VentaDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/interfaces/IInventariable.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/MovimientoProductoDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Venta.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/DetalleVentaDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/CategoriaDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/PrecioProductoDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Producto.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/VentaDtoDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/conexion/Conexion.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/ClienteDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/IDao.java

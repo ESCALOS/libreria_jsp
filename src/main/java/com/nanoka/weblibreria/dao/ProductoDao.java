@@ -112,12 +112,11 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
         RespuestaDto respuesta = new RespuestaDto();
         try {
             this.conectar();
-            String query = "UPDATE Producto SET nombre = ?, categoria_id = ?, stock = ? WHERE id = ?";
+            String query = "UPDATE Producto SET nombre = ?, categoria_id = ? WHERE id = ?";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             statement.setString(1, producto.getNombre());
             statement.setInt(2, producto.getCategoriaId());
-            statement.setInt(3, producto.getStock());
-            statement.setInt(4, producto.getId());
+            statement.setInt(3, producto.getId());
             int filasAfectadas = statement.executeUpdate();
             if (filasAfectadas == 0) {
                 respuesta.setError(true);
@@ -169,8 +168,34 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
         }
         return respuesta;
     }
+    
+    public Producto obtenerProductoPorId(int productoId) {
+        try {
+            this.conectar();
+            String query = "SELECT * from Producto";
+            PreparedStatement statement = this.getCon().prepareStatement(query);
+            statement.setInt(1, productoId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Producto producto = Producto.builder()
+                            .id(resultSet.getInt("id"))
+                            .nombre(resultSet.getString("nombre"))
+                            .categoriaId(resultSet.getInt("categoria_id"))
+                            .stock(resultSet.getInt("stock"))
+                            .build();
+                    
+                    return producto;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener producto por ID: " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return null;
+    }
 
-    public ProductoDto obtenerProductoPorId(int productoId) {
+    public ProductoDto obtenerProductoDtoPorId(int productoId) {
         try {
             this.conectar();
             String query = "SELECT p.id, p.nombre, c.id as categoria_id, c.nombre as categoria_nombre, p.stock from Producto p INNER JOIN Categoria c ON p.categoria_id = c.id WHERE p.id = ?";
@@ -206,12 +231,10 @@ public class ProductoDao extends Conexion implements IDao<Producto> {
             String mensajeError = e.getMessage().toLowerCase();
             respuesta.setError(false);
             respuesta.setIcon("error");
-            if (mensajeError.contains("dni")) {
-                respuesta.setMensaje("El DNI ya está registrado en la base de datos.");
-            } else if (mensajeError.contains("email")) {
-                respuesta.setMensaje("El correo ya está registrado en la base de datos.");
+            if (mensajeError.contains("nombre")) {
+                respuesta.setMensaje("El producto ya está registrado en la base de datos.");
             } else {
-                respuesta.setMensaje("Resale al de arriba");
+                respuesta.setMensaje(e.getMessage());
             }
         } else {
             respuesta.setMensaje("Error inesperado por que está repetido");

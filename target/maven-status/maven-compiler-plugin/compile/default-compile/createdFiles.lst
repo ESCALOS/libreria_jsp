@@ -1,4 +1,5 @@
 com/nanoka/weblibreria/models/Cliente.class
+com/nanoka/weblibreria/dto/DetalleVentaDto.class
 com/nanoka/weblibreria/dao/VentaDao.class
 com/nanoka/weblibreria/dao/ClienteDao.class
 com/nanoka/weblibreria/dao/DetalleVentaDao.class
@@ -16,16 +17,20 @@ com/nanoka/weblibreria/models/Categoria.class
 com/nanoka/weblibreria/interfaces/IInventariable.class
 com/nanoka/weblibreria/controllers/ApiServlet.class
 com/nanoka/weblibreria/models/Venta.class
+com/nanoka/weblibreria/dao/VentaDtoDao.class
 com/nanoka/weblibreria/resources/JakartaEE8Resource.class
 com/nanoka/weblibreria/dao/UnidadMedidaDao.class
 com/nanoka/weblibreria/JakartaRestConfiguration.class
 com/nanoka/weblibreria/dao/PrecioProductoDao.class
 com/nanoka/weblibreria/models/DetalleVenta$DetalleVentaBuilder.class
+com/nanoka/weblibreria/dto/VentaDto$VentaDtoBuilder.class
 com/nanoka/weblibreria/controllers/MainServlet.class
+com/nanoka/weblibreria/dto/DetalleVentaDto$DetalleVentaDtoBuilder.class
 com/nanoka/weblibreria/dto/MovimientoProductoDto$MovimientoProductoDtoBuilder.class
 com/nanoka/weblibreria/models/PrecioProducto.class
 com/nanoka/weblibreria/models/DetalleVenta.class
 com/nanoka/weblibreria/models/Producto.class
+com/nanoka/weblibreria/dto/VentaDto.class
 com/nanoka/weblibreria/models/Cliente$ClienteBuilder.class
 com/nanoka/weblibreria/models/UnidadMedida$UnidadMedidaBuilder.class
 com/nanoka/weblibreria/conexion/Conexion.class

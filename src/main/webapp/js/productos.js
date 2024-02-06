@@ -10,12 +10,14 @@ $(document).ready(function () {
     $(document).on('click', '.btnGuardar', function () {
         $('form')[0].reset();
         $(".modal-title").text("Agregar Producto");
+        $("#stock").attr("readonly",false);
         $("#accion").val("guardar");
     });
     
     $(document).on('click', '.btnEditar', function () {
         llenarCampos($(this).closest('tr'),false);
         $(".modal-title").text("Editar Producto");
+        $("#stock").attr("readonly",true);
         $("#accion").val("editar");
         $.ajax({
             url: "/WebLibreria/api/v1",
