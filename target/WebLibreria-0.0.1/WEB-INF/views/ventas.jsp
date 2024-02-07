@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <fmt:setLocale value = "es_PE"/>
-<c:set var="titulo" value="Vender" />
+<c:set var="titulo" value="Ventas" />
 
 <c:set var="cabecera" >
     <div class="row m-2">
