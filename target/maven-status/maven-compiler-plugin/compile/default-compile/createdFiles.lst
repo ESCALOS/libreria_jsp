@@ -4,6 +4,7 @@ com/nanoka/weblibreria/dao/VentaDao.class
 com/nanoka/weblibreria/dao/DetalleVentaDao.class
 com/nanoka/weblibreria/services/CrudService.class
 com/nanoka/weblibreria/dto/MovimientoProductoDto.class
+com/nanoka/weblibreria/services/MovimientoService.class
 com/nanoka/weblibreria/dao/ProveedorDao.class
 com/nanoka/weblibreria/dao/CategoriaDao.class
 com/nanoka/weblibreria/models/Categoria.class

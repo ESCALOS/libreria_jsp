@@ -42,7 +42,7 @@ function nuevoProducto() {
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="producto${contador}" class="form-label">Producto ${contador}</label>
+                            <label for="producto${contador}" class="form-label">Producto N° ${contador}</label>
                             <select name="producto${contador}" id="producto${contador}" class="form-select">
     `;
     productos.forEach((producto) => {
@@ -65,12 +65,6 @@ function nuevoProducto() {
                         <div class="form-group">
                             <label for="monto${contador}" class="form-label">Monto</label>
                             <input type="number" name="monto${contador}" id="monto${contador}" class="form-control" value="1" min="0" />
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="razon${contador}" class="form-label">Razón</label>
-                            <input type="text" name="razon${contador}" id="razon${contador}" class="form-control" placeholder="Ingrese la razón del movimiento"/>
                         </div>
                     </div>
                 </div><hr>`;

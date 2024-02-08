@@ -33,13 +33,19 @@
 <c:set var="cuerpoModal">
     <div class="row">
         <input type="hidden" name="cantidadProductos" id="cantidadProductos" value="0"/>
-        <div class="col-sm-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="tipo" class="form-label">Tipo de Movimiento</label>
                 <select name="tipo" id="tipo" class="form-select">
                     <option>INGRESO</option>
                     <option>SALIDA</option>
                 </select>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="razon" class="form-label">Razón</label>
+                <input type="text" name="razon" id="razon" class="form-control" placeholder="Ingrese la razón del movimiento"/>
             </div>
         </div>
         <h5 class="mt-4 fw-bold">Productos:</h5>

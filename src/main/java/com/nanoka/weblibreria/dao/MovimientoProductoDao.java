@@ -44,7 +44,7 @@ public class MovimientoProductoDao extends Conexion implements IDao<MovimientoPr
         ArrayList<MovimientoProductoDto> movimientosProducto = new ArrayList<>();
         try {
             this.conectar();
-            String query = "SELECT mp.id, mp.producto_id,p.nombre as producto, mp.cantidad,mp.monto,mp.razon,mp.fecha,mp.tipo FROM MovimientosProducto mp INNER JOIN Producto p ON p.id = mp.producto_id";
+            String query = "SELECT mp.id, mp.producto_id,p.nombre as producto, mp.cantidad,mp.monto,mp.razon,mp.fecha,mp.tipo FROM MovimientosProducto mp INNER JOIN Producto p ON p.id = mp.producto_id ORDER BY mp.fecha DESC";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

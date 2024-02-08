@@ -36,14 +36,14 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link <c:if test="${param.page eq 'movimientos'}">active</c:if>" href="${pageContext.servletContext.contextPath}/main?page=movimientos">Movimientos</a>
-                                </li
+                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Gráficos
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/main?page=grafico_ventas_por_mes">Ventas por mes</a></li>
-                                        <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/main?page=grafico_productos_mas_vendidos">Productos más vendidos</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/main?page=grafico_productos_mas_vendidos">Productos más vendidos</a></li>
                                 </ul>
                             </li>
                         </ul>

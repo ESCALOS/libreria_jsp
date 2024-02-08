@@ -16,13 +16,9 @@ import com.nanoka.weblibreria.services.*;
 public class MainServlet extends HttpServlet {
 
     private final CrudService crudService;
-    private final ProductoService productoService;
-    private final VentaService ventaService;
 
     public MainServlet() {
         this.crudService = new CrudService();
-        this.productoService = new ProductoService();
-        this.ventaService = new VentaService();
     }
     
     @Override
@@ -134,13 +130,17 @@ public class MainServlet extends HttpServlet {
                     data = new UnidadMedidaDao().obtenerTodos();
                     break;
                 case "productos":
-                    productoService.logicaProducto(request, id, nombre, respuesta, crudService);
+                    new ProductoService().logicaProducto(request, id, nombre, respuesta, crudService);
                     data = new ProductoDao().obtenerTodosDto();
                     request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;
                 case "ventas":
-                    ventaService.ingresarVenta(request, respuesta, crudService);
+                    new VentaService().ingresarVenta(request, respuesta, crudService);
                     data = new VentaDtoDao().obtenerTodos();
+                    break;
+                case "movimientos":
+                    new MovimientoService().ingresarVenta(request, respuesta, crudService);
+                    data = new MovimientoProductoDao().obtenerTodosDto();
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
