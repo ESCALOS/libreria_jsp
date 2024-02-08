@@ -19,4 +19,5 @@ public class MovimientoProductoDto {
     private BigDecimal monto;
     private String razon;
     private Timestamp fecha;
+    private String tipo;
 }

@@ -1,31 +1,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:set var="titulo" value="Lista de Productos" />
+<c:set var="titulo" value="Movimientos de Productos" />
 
 <c:set var="cabecera" >
     <div class="row m-2">
-        <div class="col-9"><h1>Gestión de Productos</h1></div>
+        <div class="col-9"><h1>${titulo}</h1></div>
         <div class="col-3 align-self-center">
             <div class="d-grid gap-2">
-                <button type="button" class="btn btn-success btn-md btnGuardar" data-bs-toggle="modal" data-bs-target="#modal">Agregar</button>
+                <button type="button" class="btn btn-success btn-md btnGuardar" data-bs-toggle="modal" data-bs-target="#modal">Agregar Movimiento</button>
             </div>
         </div>
     </div>
 </c:set>
 
 <!--Tabla-->    
-<c:set var="cabeceraTabla" value="Nombre,Categoria,Stock,Opciones"></c:set>
+<c:set var="cabeceraTabla" value="Producto,Tipo,Cantidad,Monto,Razón,Fecha"></c:set>
 <c:set var="cuerpoTabla">
     <c:forEach items="${data}" var="movimiento">
         <tr>
             <td class="d-none id">${movimiento.getId()}</td>
-            <td class="nombre">${movimiento.getProducto().getNombre()}</td>
-            <td class="categoria">${movimiento.getCantidad()}</td>
-            <td class="stock">${movimiento.getStock()}</td>
-            <td>
-                <button type="button" class="btn btn-warning btnEditar" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-pencil"></i></button>
-                <button type="button" class="btn btn-danger btnEliminar"><i class="fa-solid fa-trash"></i></button>
-            </td>
+            <td class="producto">${movimiento.getProducto().getNombre()}</td>
+            <td class="tipo"><span class="badge ${"INGRESO".equalsIgnoreCase(movimiento.getTipo()) ? 'bg-success' : 'bg-danger'}">${movimiento.getTipo()}</span></td>
+            <td class="cantidad">${movimiento.getCantidad()}u</td>
+            <td class="monto">S/. ${movimiento.getMonto()}</td>
+            <td class="razon">${movimiento.getRazon()}</td>
+            <td class="fecha">${movimiento.getFecha()}</td>
         </tr>
     </c:forEach>
 </c:set>
@@ -33,33 +32,20 @@
 <!--Modal-->
 <c:set var="cuerpoModal">
     <div class="row">
-        <input type="hidden" name="cantidadPrecios" id="cantidadPrecios" value="0"/>
-        <div class="col-sm-5">
+        <input type="hidden" name="cantidadProductos" id="cantidadProductos" value="0"/>
+        <div class="col-sm-12">
             <div class="form-group">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" required/>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label for="categoria" class="form-label">Categoria</label>
-                <select name="categoria" id="categoria" class="form-select">
-                    <c:forEach items="${categorias}" var="categoria">
-                        <option value="${categoria.getId()}">${categoria.getNombre()}</option>
-                    </c:forEach>
+                <label for="tipo" class="form-label">Tipo de Movimiento</label>
+                <select name="tipo" id="tipo" class="form-select">
+                    <option>INGRESO</option>
+                    <option>SALIDA</option>
                 </select>
             </div>
         </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-                <label for="stock" class="form-label">Stock</label>
-                <input type="number" name="stock" id="stock" value="0" class="form-control"/>
-            </div>
+        <h5 class="mt-4 fw-bold">Productos:</h5>
+        <div id="detalleProductos" class="mb-4">
         </div>
-        <h5 class="mt-4 fw-bold">Precios:</h5>
-        <div id="detallePrecios" class="mb-4">
-        </div>
-        <button type="button" class="btn btn-primary" id="agregarPrecio">Añadir</button>
+        <button type="button" class="btn btn-primary" id="agregarProducto">Añadir</button>
     </div>
 </c:set>
 

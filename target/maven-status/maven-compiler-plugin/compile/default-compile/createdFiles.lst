@@ -2,7 +2,6 @@ com/nanoka/weblibreria/models/Cliente.class
 com/nanoka/weblibreria/dto/RespuestaDto.class
 com/nanoka/weblibreria/dao/VentaDao.class
 com/nanoka/weblibreria/dao/DetalleVentaDao.class
-com/nanoka/weblibreria/dao/MovimientoProducto$MovimientoProductoBuilder.class
 com/nanoka/weblibreria/services/CrudService.class
 com/nanoka/weblibreria/dto/MovimientoProductoDto.class
 com/nanoka/weblibreria/dao/ProveedorDao.class
@@ -20,7 +19,6 @@ com/nanoka/weblibreria/dao/IDao.class
 com/nanoka/weblibreria/dto/DetalleVentaDto$DetalleVentaDtoBuilder.class
 com/nanoka/weblibreria/dto/MovimientoProductoDto$MovimientoProductoDtoBuilder.class
 com/nanoka/weblibreria/dto/PrecioProductoDto.class
-com/nanoka/weblibreria/dao/MovimientoProducto.class
 com/nanoka/weblibreria/conexion/Conexion.class
 com/nanoka/weblibreria/dto/ProductoMasVendidosDto.class
 com/nanoka/weblibreria/dto/PrecioProductoDto$PrecioProductoDtoBuilder.class
@@ -34,8 +32,8 @@ com/nanoka/weblibreria/models/UnidadMedida.class
 com/nanoka/weblibreria/dto/GraficoDto$GraficoDtoBuilder.class
 com/nanoka/weblibreria/models/Categoria$CategoriaBuilder.class
 com/nanoka/weblibreria/models/Proveedor.class
-com/nanoka/weblibreria/models/PrecioProducto$PrecioProductoBuilder.class
 com/nanoka/weblibreria/models/Producto$ProductoBuilder.class
+com/nanoka/weblibreria/models/PrecioProducto$PrecioProductoBuilder.class
 com/nanoka/weblibreria/dto/RespuestaDto$RespuestaDtoBuilder.class
 com/nanoka/weblibreria/services/ProductoService.class
 com/nanoka/weblibreria/interfaces/IInventariable.class

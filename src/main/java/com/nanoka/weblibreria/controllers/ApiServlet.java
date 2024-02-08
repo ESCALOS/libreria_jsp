@@ -7,6 +7,7 @@ import com.nanoka.weblibreria.dao.PrecioProductoDao;
 import com.nanoka.weblibreria.dao.UnidadMedidaDao;
 import com.nanoka.weblibreria.dao.DetalleVentaDao;
 import com.nanoka.weblibreria.dao.ClienteDao;
+import com.nanoka.weblibreria.dao.ProductoDao;
 import com.nanoka.weblibreria.dao.VentaDao;
 import com.nanoka.weblibreria.dto.DetalleVentaDto;
 import com.nanoka.weblibreria.dto.PrecioProductoDto;
@@ -44,6 +45,10 @@ public class ApiServlet extends HttpServlet {
         
         if("unidadesMedida".equalsIgnoreCase(query)) {
             json = obtenerUnidadesMedida();
+        }
+        
+        if("productos".equalsIgnoreCase(query)) {
+            json = obtenerProductos();
         }
         
         if("clientes".equalsIgnoreCase(query)) {
@@ -92,9 +97,19 @@ public class ApiServlet extends HttpServlet {
         
         JsonArray unidades = new JsonArray();
         for(UnidadMedida um : unidadesMedida) {
-            unidades.add(crearUM(UnidadMedida.builder().id(um.getId()).nombre(um.getNombre()).build()));
+            unidades.add(crearUM(um));
         }
-        return new Gson().toJson(unidadesMedida);
+        return new Gson().toJson(unidades);
+    }
+    
+    private String obtenerProductos() {
+        ArrayList<Producto> productos = new ProductoDao().obtenerTodos();
+        
+        JsonArray productosJson = new JsonArray();
+        for(Producto producto : productos) {
+            productosJson.add(crearProducto(producto));
+        }
+        return new Gson().toJson(productosJson);
     }
     
     private String obtenerClientes() {
@@ -157,6 +172,13 @@ public class ApiServlet extends HttpServlet {
         return umJson;
     }
     
+    private JsonObject crearProducto(Producto producto) {
+        JsonObject productoJson = new JsonObject();
+        productoJson.addProperty("id", producto.getId());
+        productoJson.addProperty("nombre", producto.getNombre());
+        return productoJson;
+    }
+    
     private JsonObject crearCliente(Cliente cliente) {
         JsonObject clienteJson = new JsonObject();
         clienteJson.addProperty("id", cliente.getId());
@@ -173,12 +195,5 @@ public class ApiServlet extends HttpServlet {
         dvJson.addProperty("precio", detalleVentaDto.getPrecio());
         dvJson.addProperty("subtotal", detalleVentaDto.getSubtotal());
         return dvJson;
-    }
-    
-    private JsonObject crearProducto(Producto producto) {
-        JsonObject productoJson = new JsonObject();
-        productoJson.addProperty("id", producto.getId());
-        productoJson.addProperty("nombre", producto.getNombre());
-        return productoJson;
     }
 }

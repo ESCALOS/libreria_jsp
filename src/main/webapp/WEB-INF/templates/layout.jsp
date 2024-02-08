@@ -36,16 +36,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link <c:if test="${param.page eq 'movimientos'}">active</c:if>" href="${pageContext.servletContext.contextPath}/main?page=movimientos">Movimientos</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Reportes
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Ventas</a></li>
-                                        <li><a class="dropdown-item" href="#">Kardex</a></li>
-                                    </ul>
-                                </li>
+                                </li
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Gráficos

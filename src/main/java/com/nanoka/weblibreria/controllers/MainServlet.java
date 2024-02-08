@@ -53,6 +53,9 @@ public class MainServlet extends HttpServlet {
                     data = new VentaDtoDao().obtenerTodos();
                     request.setAttribute("clientes", new ClienteDao().obtenerTodos());
                     break;
+                case "movimientos" :
+                    data = new MovimientoProductoDao().obtenerTodosDto();
+                    break;
                 case "grafico_productos_mas_vendidos":
                     GraficoDto<ProductoMasVendidosDto> resultadoPmv = new ProductosMasVendidosService().logica(request);
                     request.setAttribute("graficoDto", resultadoPmv);
