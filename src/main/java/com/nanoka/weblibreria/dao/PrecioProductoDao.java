@@ -72,7 +72,7 @@ public class PrecioProductoDao  extends Conexion implements IDao<PrecioProducto>
         ArrayList<PrecioProductoDto> productos = new ArrayList<>();
         try {
             this.conectar();
-            String query = "SELECT pp.producto_id, p.nombre as nombre_producto, pp.unidad_medida_id, um.nombre as nombre_um categoria_id, pp.id, pp.cantidad, pp.precio from PreciosProducto pp INNER JOIN Producto p ON pp.producto_id = p.id INNER JOIN UnidadMedida um ON pp.unidad_medida_id = um.id;";
+            String query = "SELECT pp.id, pp.producto_id, p.nombre as nombre_producto, pp.unidad_medida_id, um.nombre as nombre_unidad, pp.cantidad, pp.precio from PreciosProducto pp INNER JOIN Producto p ON p.id = pp.producto_id INNER JOIN UnidadMedida um ON um.id = pp.unidad_medida_id";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -83,7 +83,7 @@ public class PrecioProductoDao  extends Conexion implements IDao<PrecioProducto>
                 
                 UnidadMedida unidadMedida = UnidadMedida.builder()
                         .id(resultSet.getInt("unidad_medida_id"))
-                        .nombre(resultSet.getString("nombre_um"))
+                        .nombre(resultSet.getString("nombre_unidad"))
                         .build();
 
                 PrecioProductoDto precioProductoDto = PrecioProductoDto.builder()

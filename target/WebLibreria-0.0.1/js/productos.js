@@ -15,7 +15,7 @@ $(document).ready(function () {
     });
     
     $(document).on('click', '.btnEditar', function () {
-        llenarCampos($(this).closest('tr'),false);
+        llenarCampos($(this).closest('tr'));
         $(".modal-title").text("Editar Producto");
         $("#stock").attr("readonly",true);
         $("#accion").val("editar");

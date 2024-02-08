@@ -22,11 +22,11 @@
     <c:forEach items="${data}" var="venta">
         <tr>
             <td class="id">${venta.getId()}</td>
-            <td class="nombre">${venta.getCliente().getNombre()}</td>
-            <td class="categoria"><fmt:formatDate value="${venta.getFecha()}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-            <td class="categoria"><fmt:formatNumber value = "${venta.getTotal()}" type = "currency"/></td>
+            <td class="cliente">${venta.getCliente().getNombre()}</td>
+            <td class="fecha"><fmt:formatDate value="${venta.getFecha()}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+            <td class="monto"><fmt:formatNumber value = "${venta.getTotal()}" type = "currency"/></td>
             <td>
-                <button type="button" class="btn btn-primary btnVer"><i class="fa-solid fa-eye"></i></button>
+                <button type="button" class="btn btn-primary btnVer" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-eye"></i></button>
                 <button type="button" class="btn btn-danger btnEliminar"><i class="fa-solid fa-trash"></i></button>
             </td>
         </tr>
@@ -35,34 +35,41 @@
 
 <!--Modal-->
 <c:set var="cuerpoModal">
-    <div class="row">
-        <input type="hidden" name="cantidadPrecios" id="cantidadPrecios" value="0"/>
-        <div class="col-sm-5">
+    <div class="row form-venta">
+        <input type="hidden" name="cantidadProductos" id="cantidadProductos" value="0"/>
+        <div class="col-sm-8">
             <div class="form-group">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" required/>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label for="categoria" class="form-label">Categoria</label>
-                <select name="categoria" id="categoria" class="form-select">
-                    <c:forEach items="${categorias}" var="categoria">
-                        <option value="${categoria.getId()}">${categoria.getNombre()}</option>
+                <label for="categoria" class="form-label">Cliente</label>
+                <select name="cliente" id="cliente" class="form-select">
+                    <c:forEach items="${clientes}" var="cliente">
+                        <option value="${cliente.getId()}">${cliente.getNombre()} (${cliente.getDni()})</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-4">
             <div class="form-group">
-                <label for="stock" class="form-label">Stock</label>
-                <input type="number" name="stock" id="stock" value="0" class="form-control"/>
+                <label for="montoTotal" class="form-label">Total</label>
+                <input type="text" id="montoTotal" name="montoTotal" class="form-control" readonly/>
             </div>
         </div>
-        <h5 class="mt-4 fw-bold">Precios:</h5>
+        <h5 class="mt-4 fw-bold">Productos</h5>
         <div id="detallePrecios" class="mb-4">
         </div>
-        <button type="button" class="btn btn-primary" id="agregarPrecio">Añadir</button>
+        <button type="button" class="btn btn-primary" id="agregarProducto">Añadir</button>
+    </div>
+    <div class="detalle">
+        <div class="row">
+            <div class="col-7">
+                <h4 id="cliente_detalle"></h4>
+            </div>
+            <div class="col-5">
+                <h5 id="fecha_detalle"></h5>
+            </div>
+        </div>
+        <div id="tabla-detalle">
+            
+        </div>
     </div>
 </c:set>
 

@@ -10,12 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.nanoka.weblibreria.dao.*;
 import com.nanoka.weblibreria.models.*;
 import com.nanoka.weblibreria.dto.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import com.nanoka.weblibreria.services.*;
 
 @WebServlet(name = "MainServlet", urlPatterns = {"/main"})
 public class MainServlet extends HttpServlet {
 
+    private final CrudService crudService;
+    private final ProductoService productoService;
+    private final VentaService ventaService;
+
+    public MainServlet() {
+        this.crudService = new CrudService();
+        this.productoService = new ProductoService();
+        this.ventaService = new VentaService();
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,6 +51,7 @@ public class MainServlet extends HttpServlet {
                     break;
                 case "ventas" :
                     data = new VentaDtoDao().obtenerTodos();
+                    request.setAttribute("clientes", new ClienteDao().obtenerTodos());
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -61,7 +71,7 @@ public class MainServlet extends HttpServlet {
         String page = request.getParameter("page") == null ? "ventas" : (String) request.getParameter("page");
         @SuppressWarnings("rawtypes")
         ArrayList data;
-        RespuestaDto respuesta;
+        RespuestaDto respuesta = RespuestaDto.builder().mensaje("Ocurrio un error").icon("error").error(true).build();
         try {
         int id = Integer.parseInt(request.getParameter("id"));
         String nombre = request.getParameter("nombre");
@@ -77,7 +87,7 @@ public class MainServlet extends HttpServlet {
                             .email(email)
                             .direccion(direccion)
                             .build();
-                    respuesta = crud(cliente, new ClienteDao(), request.getParameter("accion"));
+                    crudService.crud(cliente, new ClienteDao(), request.getParameter("accion"),respuesta);
                     data = new ClienteDao().obtenerTodos();
                     break;
                 case "proveedores":
@@ -91,7 +101,7 @@ public class MainServlet extends HttpServlet {
                             .personaContacto(personaContacto)
                             .telefono(telefono)
                             .build();
-                    respuesta = crud(proveedor, new ProveedorDao(), request.getParameter("accion"));
+                    crudService.crud(proveedor, new ProveedorDao(), request.getParameter("accion"),respuesta);
                     data = new ProveedorDao().obtenerTodos();
                     break;
                 case "categorias":
@@ -99,7 +109,7 @@ public class MainServlet extends HttpServlet {
                             .id(id)
                             .nombre(nombre)
                             .build();
-                    respuesta = crud(categoria, new CategoriaDao(), request.getParameter("accion"));
+                    crudService.crud(categoria, new CategoriaDao(), request.getParameter("accion"),respuesta);
                     data = new CategoriaDao().obtenerTodos();
                     break;
                 case "unidades":
@@ -107,100 +117,16 @@ public class MainServlet extends HttpServlet {
                             .id(id)
                             .nombre(nombre)
                             .build();
-                    respuesta = crud(unidadMedida, new UnidadMedidaDao(), request.getParameter("accion"));
+                    crudService.crud(unidadMedida, new UnidadMedidaDao(), request.getParameter("accion"),respuesta);
                     data = new UnidadMedidaDao().obtenerTodos();
                     break;
                 case "productos":
-                    int categoriaId = 0;
-                    int stock = 0;
-                    if(!"eliminar".equalsIgnoreCase(request.getParameter("accion"))) {
-                        categoriaId = Integer.parseInt(request.getParameter("categoria"));
-                        stock = Integer.parseInt(request.getParameter("stock"));
-                    }
-                    Producto producto = Producto.builder()
-                            .id(id)
-                            .nombre(nombre)
-                            .categoriaId(categoriaId)
-                            .stock(stock)
-                            .build();
-                    respuesta = crud(producto, new ProductoDao(), request.getParameter("accion"));
-                    if("guardar".equalsIgnoreCase(request.getParameter("accion")) && !respuesta.isError()){
-                        id = Integer.parseInt(respuesta.getMensaje());
-                        respuesta.setMensaje("Producto Agregado");
-                    }
-                    if(!"eliminar".equalsIgnoreCase(request.getParameter("accion"))) {
-                        int cantidadPrecios = Integer.parseInt(request.getParameter("cantidadPrecios"));
-                        for(int i = 1; i <=  cantidadPrecios; i++) {
-                            String unidadMedidaParam = request.getParameter("unidadMedida" + i);
-                            String cantidadParam = request.getParameter("cantidad" + i);
-                            String precioParam = request.getParameter("precio" + i);
-                            
-                            if(unidadMedidaParam != null && cantidadParam != null && precioParam != null) {
-                                int precioId = Integer.parseInt(request.getParameter("precioId" + i));
-                                int unidadMedidaId = Integer.parseInt(unidadMedidaParam);
-                                int cantidad = cantidadParam.isBlank() ? 0 : Integer.parseInt(cantidadParam);
-                                BigDecimal precio = precioParam.isBlank() ? BigDecimal.ZERO : new BigDecimal(precioParam);
-                                PrecioProductoDao precioProductoDao = new PrecioProductoDao();
-                                
-                                PrecioProducto precioProducto = PrecioProducto.builder()
-                                        .id(precioId)
-                                        .productoId(id)
-                                        .unidadMedidaId(unidadMedidaId)
-                                        .cantidad(cantidad)
-                                        .precio(precio)
-                                        .build();
-                                if(cantidad <= 0) {
-                                    if(precioId > 0) {
-                                        precioProductoDao.eliminar(precioProducto);
-                                    }
-                                }else {
-                                    if(precioId == 0) {
-                                        precioProductoDao.insertar(precioProducto);
-                                    } else {
-                                        precioProductoDao.editar(precioProducto);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    productoService.logicaProducto(request, id, nombre, respuesta, crudService);
                     data = new ProductoDao().obtenerTodosDto();
                     request.setAttribute("categorias", new CategoriaDao().obtenerTodos());
                     break;
                 case "ventas":
-                    ArrayList<DetalleVentaDto> detallesVenta = new ArrayList<>();
-                    PrecioProductoDto precioProducto1 = new PrecioProductoDao().obtenerPrecioProductoPorId(21);
-                    int cantidadTotal = precioProducto1.getCantidad()*2;
-                    BigDecimal subtotal = precioProducto1.getPrecio().multiply(BigDecimal.valueOf(2d));
-                    BigDecimal total = BigDecimal.ZERO;
-                    DetalleVentaDto detalleVenta1 = DetalleVentaDto.builder()
-                            .producto(precioProducto1.getProducto())
-                            .cantidadTotal(cantidadTotal)
-                            .cantidadUnidad(2)
-                            .nombreUnidad(precioProducto1.getUnidadMedida().getNombre())
-                            .precio(precioProducto1.getPrecio())
-                            .subtotal(subtotal)
-                            .build();
-                    detallesVenta.add(detalleVenta1);
-                    total = total.add(subtotal);
-                    PrecioProductoDto precioProducto2 = new PrecioProductoDao().obtenerPrecioProductoPorId(24);
-                    int cantidadTotal2 = precioProducto2.getCantidad()*5;
-                    DetalleVentaDto detalleVenta2 = DetalleVentaDto.builder()
-                            .producto(precioProducto2.getProducto())
-                            .cantidadTotal(cantidadTotal2)
-                            .cantidadUnidad(2)
-                            .nombreUnidad(precioProducto1.getUnidadMedida().getNombre())
-                            .precio(precioProducto1.getPrecio())
-                            .subtotal(precioProducto1.getPrecio().multiply(BigDecimal.valueOf(5d)))
-                            .build();
-                    detallesVenta.add(detalleVenta2);
-                    total = total.add(subtotal);
-                    VentaDto venta = VentaDto.builder()
-                            .cliente(Cliente.builder().id(1).build())
-                            .fecha(new Timestamp(System.currentTimeMillis()))
-                            .total(total)
-                            .detallesVenta(detallesVenta)
-                            .build();
-                    respuesta = crud(venta, new VentaDtoDao(),request.getParameter("accion"));
+                    ventaService.ingresarVenta(request, respuesta, crudService);
                     data = new VentaDtoDao().obtenerTodos();
                     break;
                 default:
@@ -216,29 +142,5 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    private <T> RespuestaDto crud(T data, IDao<T> dao, String accion) {
-        RespuestaDto respuesta = new RespuestaDto();
-        try {
-            switch (accion) {
-                case "guardar":
-                    respuesta = dao.insertar(data);
-                    break;
-                case "editar":
-                    respuesta = dao.editar(data);
-                    break;
-                case "eliminar":
-                    respuesta = dao.eliminar(data);
-                    break;
-                default:
-                    respuesta.setMensaje("Datos corrompidos");
-                    respuesta.setIcon("warning");
-                    respuesta.setError(true);
-            }
-        } catch (Exception e) {
-            respuesta.setMensaje(e.getMessage());
-            respuesta.setIcon("error");
-            respuesta.setError(true);
-        }
-        return respuesta;
-    }
+    
 }

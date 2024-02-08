@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class DetalleVentaDto {
     private int id;
     private Producto producto;
-    private int cantidadTotal;
+    private int cantidad;
     private int cantidadUnidad;
     private String nombreUnidad;
     private BigDecimal precio;

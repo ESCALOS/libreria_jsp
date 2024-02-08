@@ -1,4 +1,5 @@
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Proveedor.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/ProductoService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/UnidadMedida.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/UnidadMedidaDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/ProductoDto.java
@@ -10,8 +11,10 @@
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/controllers/ApiServlet.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Cliente.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/ProveedorDao.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/CrudService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/VentaDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Categoria.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/VentaService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/RespuestaDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/JakartaRestConfiguration.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/ProductoDao.java

@@ -121,7 +121,7 @@ public class VentaDao extends Conexion implements IDao<Venta> {
     public VentaDto obtenerVentaPorId(int ventaId) {
         try {
             this.conectar();
-            String query = "SELECT v.fecha, v.total, v.cliente_id, c.nombre as cliente, c.dni, c.email, c.direccion from Venta v INNER JOIN Cliente c ON c.id = v.cliente_id WHERE v.id = ?";
+            String query = "SELECT v.id, v.fecha, v.total, v.cliente_id, c.nombre as cliente, c.dni, c.email, c.direccion from Venta v INNER JOIN Cliente c ON c.id = v.cliente_id WHERE v.id = ?";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             statement.setInt(1, ventaId);
             try (ResultSet resultSet = statement.executeQuery()) {

@@ -14,7 +14,7 @@ public class DetalleVenta {
     private int id;
     private int ventaId;
     private int productoId;
-    private int cantidadTotal;
+    private int cantidad;
     private int cantidadUnidad;
     private String nombreUnidad;
     private BigDecimal precio;

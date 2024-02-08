@@ -19,7 +19,7 @@ public class VentaDtoDao extends Conexion implements IDao<VentaDto>{
         ArrayList<VentaDto> ventas = new ArrayList<>();
         try {
             this.conectar();
-            String query = "SELECT v.id, v.fecha, v.total, v.cliente_id, c.nombre as cliente, c.dni, c.email, c.direccion from Venta v INNER JOIN Cliente c ON c.id = v.cliente_id;";
+            String query = "SELECT v.id, v.fecha, v.total, v.cliente_id, c.nombre as cliente, c.dni, c.email, c.direccion from Venta v INNER JOIN Cliente c ON c.id = v.cliente_id ORDER BY v.id DESC";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -104,15 +104,15 @@ public class VentaDtoDao extends Conexion implements IDao<VentaDto>{
     }
 
     private static void insertarDetalleVenta(Connection conexion, DetalleVentaDto detalleVenta, int id) throws SQLException {
-        String sql = "INSERT INTO DetalleVenta (venta_id, producto_id, cantidad_total, cantidad_unidad, nombre_unidad, precio, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO DetalleVenta (venta_id, producto_id, cantidad, cantidad_unidad, nombre_unidad, precio, subtotal) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = conexion.prepareStatement(sql);
             statement.setInt(1, id);
             statement.setInt(2, detalleVenta.getProducto().getId());
-            statement.setInt(3, detalleVenta.getCantidadTotal());
+            statement.setInt(3, detalleVenta.getCantidad());
             statement.setInt(4, detalleVenta.getCantidadUnidad());
             statement.setString(5, detalleVenta.getNombreUnidad());
-            statement.setBigDecimal(6, detalleVenta.getSubtotal());
+            statement.setBigDecimal(6, detalleVenta.getPrecio());
             statement.setBigDecimal(7, detalleVenta.getSubtotal());
 
             int filasAfectadas = statement.executeUpdate();
