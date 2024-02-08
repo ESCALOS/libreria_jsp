@@ -72,7 +72,7 @@ public class PrecioProductoDao  extends Conexion implements IDao<PrecioProducto>
         ArrayList<PrecioProductoDto> productos = new ArrayList<>();
         try {
             this.conectar();
-            String query = "SELECT pp.id, pp.producto_id, p.nombre as nombre_producto, pp.unidad_medida_id, um.nombre as nombre_unidad, pp.cantidad, pp.precio from PreciosProducto pp INNER JOIN Producto p ON p.id = pp.producto_id INNER JOIN UnidadMedida um ON um.id = pp.unidad_medida_id";
+            String query = "SELECT pp.id, pp.producto_id, p.nombre as nombre_producto, pp.unidad_medida_id, um.nombre as nombre_unidad, pp.cantidad, pp.precio from PreciosProducto pp INNER JOIN Producto p ON p.id = pp.producto_id INNER JOIN UnidadMedida um ON um.id = pp.unidad_medida_id ORDER BY nombre_producto";
             PreparedStatement statement = this.getCon().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

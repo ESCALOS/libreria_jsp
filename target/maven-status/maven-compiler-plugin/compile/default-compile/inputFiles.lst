@@ -1,3 +1,5 @@
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/ProductoMasVendidosDto.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/ProductosMasVendidosService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Proveedor.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/ProductoService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/UnidadMedida.java
@@ -17,6 +19,7 @@
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/VentaService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/RespuestaDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/JakartaRestConfiguration.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/GraficoDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/ProductoDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/PrecioProductoDto.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dto/VentaDto.java

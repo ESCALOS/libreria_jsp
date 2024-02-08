@@ -1,6 +1,7 @@
 package com.nanoka.weblibreria.dao;
 
 import com.nanoka.weblibreria.conexion.Conexion;
+import com.nanoka.weblibreria.dto.ProductoMasVendidosDto;
 import com.nanoka.weblibreria.dto.VentaDto;
 import com.nanoka.weblibreria.dto.RespuestaDto;
 import com.nanoka.weblibreria.models.Cliente;
@@ -149,5 +150,30 @@ public class VentaDao extends Conexion implements IDao<Venta> {
             this.desconectar();
         }
         return null;
+    }
+    
+    
+    public ArrayList<ProductoMasVendidosDto> obtenerProductosMasVendidos(int anio) {
+        ArrayList<ProductoMasVendidosDto> lista = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "SELECT p.nombre AS producto, SUM(dv.cantidad * dv.cantidad_unidad) AS cantidad_total FROM DetalleVenta dv JOIN Venta v ON dv.venta_id = v.id JOIN Producto p ON dv.producto_id = p.id WHERE YEAR(v.fecha) = ? GROUP BY producto ORDER BY cantidad_total DESC LIMIT 8";
+            PreparedStatement statement = this.getCon().prepareStatement(query);
+            statement.setInt(1, anio);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                ProductoMasVendidosDto pmv = ProductoMasVendidosDto.builder()
+                        .producto(resultSet.getString("producto"))
+                        .cantidad(resultSet.getInt("cantidad_total"))
+                        .build();
+                lista.add(pmv);
+            }
+                
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los detalles de venta: " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return lista;
     }
 }

@@ -61,18 +61,21 @@
             </nav>
         </header>
         <main>
-            <div class="container">
-                ${cabecera}
-                <hr>
+            <div class="container-fuild p-4">
+                <c:if test="${not empty cabecera}">
+                    ${cabecera}
+                    <hr>
+                </c:if>
                 <c:if test="${not empty cabeceraTabla}">
                     <%@ include file="tabla.jsp" %>
                     <%@ include file="modal.jsp" %>
                 </c:if>
                 <c:if test="${empty cabeceraTabla}">
-                ${contenedor}
+                    ${contenedor}
                 </c:if>
             </div>
         </main>
+        ${scripts}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

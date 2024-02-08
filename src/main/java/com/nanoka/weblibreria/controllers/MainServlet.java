@@ -53,6 +53,11 @@ public class MainServlet extends HttpServlet {
                     data = new VentaDtoDao().obtenerTodos();
                     request.setAttribute("clientes", new ClienteDao().obtenerTodos());
                     break;
+                case "grafico_productos_mas_vendidos":
+                    GraficoDto<ProductoMasVendidosDto> resultado = new ProductosMasVendidosService().logica(request);
+                    request.setAttribute("graficoDto", resultado);
+                    data = resultado.getLista();
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
