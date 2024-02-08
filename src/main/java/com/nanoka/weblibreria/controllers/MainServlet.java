@@ -54,9 +54,14 @@ public class MainServlet extends HttpServlet {
                     request.setAttribute("clientes", new ClienteDao().obtenerTodos());
                     break;
                 case "grafico_productos_mas_vendidos":
-                    GraficoDto<ProductoMasVendidosDto> resultado = new ProductosMasVendidosService().logica(request);
-                    request.setAttribute("graficoDto", resultado);
-                    data = resultado.getLista();
+                    GraficoDto<ProductoMasVendidosDto> resultadoPmv = new ProductosMasVendidosService().logica(request);
+                    request.setAttribute("graficoDto", resultadoPmv);
+                    data = resultadoPmv.getLista();
+                    break;
+                case "grafico_ventas_por_mes":
+                    GraficoDto<VentaPorMesDto> resultadoVpm = new VentaPorMesService().logica(request);
+                    request.setAttribute("graficoDto", resultadoVpm);
+                    data = resultadoVpm.getLista();
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

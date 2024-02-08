@@ -4,6 +4,7 @@ import com.nanoka.weblibreria.conexion.Conexion;
 import com.nanoka.weblibreria.dto.ProductoMasVendidosDto;
 import com.nanoka.weblibreria.dto.VentaDto;
 import com.nanoka.weblibreria.dto.RespuestaDto;
+import com.nanoka.weblibreria.dto.VentaPorMesDto;
 import com.nanoka.weblibreria.models.Cliente;
 import com.nanoka.weblibreria.models.Venta;
 import java.sql.PreparedStatement;
@@ -167,6 +168,32 @@ public class VentaDao extends Conexion implements IDao<Venta> {
                         .cantidad(resultSet.getInt("cantidad_total"))
                         .build();
                 lista.add(pmv);
+            }
+                
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los detalles de venta: " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return lista;
+    }
+    
+    public ArrayList<VentaPorMesDto> obtenerVentasPorMes(int anio) {
+        ArrayList<VentaPorMesDto> lista = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "SELECT DATE_FORMAT(fecha,'%m') AS mes, COUNT(*) AS total_ventas, SUM(total) AS monto_total FROM Venta WHERE YEAR(fecha) = ? GROUP BY mes ORDER BY mes;";
+            PreparedStatement statement = this.getCon().prepareStatement(query);
+            statement.setInt(1, anio);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int mes = Integer.parseInt(resultSet.getString("mes"));
+                VentaPorMesDto vpm = VentaPorMesDto.builder()
+                        .mes(mes)
+                        .totalVentas(resultSet.getInt("total_ventas"))
+                        .montoTotal(resultSet.getBigDecimal("monto_total"))
+                        .build();
+                lista.add(vpm);
             }
                 
         } catch (SQLException e) {

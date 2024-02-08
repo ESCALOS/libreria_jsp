@@ -51,7 +51,7 @@
                                         Gráficos
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Ventas por mes</a></li>
+                                        <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/main?page=grafico_ventas_por_mes">Ventas por mes</a></li>
                                         <li><a class="dropdown-item" href="${pageContext.servletContext.contextPath}/main?page=grafico_productos_mas_vendidos">Productos más vendidos</a></li>
                                 </ul>
                             </li>

@@ -1,13 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:set var="titulo" value="Lista de Categorías" />
+<c:set var="titulo" value="Productos más vendidos" />
 
 <c:set var="contenedor">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-header">
-                    <h2>Productos más vendidos</h2>
+                    <h3 class="text-center">Productos más vendidos</h3>
                 </div>
                 <div class="card-body">
                     <form action="${pageContext.servletContext.contextPath}/main">
@@ -22,15 +22,15 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr class="table-primary">
-                                <th>Producto</th>
-                                <th>Cantidad</th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Cantidad</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${data}" var="pmv">
                                 <tr>
                                     <td>${pmv.getProducto()}</td>
-                                    <td>${pmv.getCantidad()}</td>
+                                    <td style="text-align: right">${pmv.getCantidad()}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <div class="text-center">
                 <h2>Productos más vendidos del año ${graficoDto.getAnio()}</h2>
                 <div>

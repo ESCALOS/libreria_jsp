@@ -29,6 +29,7 @@ com/nanoka/weblibreria/dao/ClienteDao.class
 com/nanoka/weblibreria/models/Proveedor$ProveedorBuilder.class
 com/nanoka/weblibreria/models/Venta$VentaBuilder.class
 com/nanoka/weblibreria/dto/ProductoDto$ProductoDtoBuilder.class
+com/nanoka/weblibreria/services/VentaPorMesService.class
 com/nanoka/weblibreria/models/UnidadMedida.class
 com/nanoka/weblibreria/dto/GraficoDto$GraficoDtoBuilder.class
 com/nanoka/weblibreria/models/Categoria$CategoriaBuilder.class
@@ -47,8 +48,10 @@ com/nanoka/weblibreria/dto/ProductoMasVendidosDto$ProductoMasVendidosDtoBuilder.
 com/nanoka/weblibreria/models/PrecioProducto.class
 com/nanoka/weblibreria/models/DetalleVenta.class
 com/nanoka/weblibreria/models/Producto.class
+com/nanoka/weblibreria/dto/VentaPorMesDto$VentaPorMesDtoBuilder.class
 com/nanoka/weblibreria/dto/VentaDto.class
 com/nanoka/weblibreria/models/Cliente$ClienteBuilder.class
 com/nanoka/weblibreria/models/UnidadMedida$UnidadMedidaBuilder.class
+com/nanoka/weblibreria/dto/VentaPorMesDto.class
 com/nanoka/weblibreria/dao/ProductoDao.class
 com/nanoka/weblibreria/dto/GraficoDto.class
