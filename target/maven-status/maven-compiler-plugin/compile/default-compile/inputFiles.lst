@@ -2,6 +2,7 @@
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/ProductosMasVendidosService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/Proveedor.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/ProductoService.java
+/home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/services/MovimientoService.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/models/UnidadMedida.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/MovimientoProductoDao.java
 /home/nanoka/NetBeansProjects/WebLibreria/src/main/java/com/nanoka/weblibreria/dao/UnidadMedidaDao.java

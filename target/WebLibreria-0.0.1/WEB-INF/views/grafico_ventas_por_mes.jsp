@@ -4,14 +4,14 @@
 <c:set var="total" value="0"/>
 <c:set var="contenedor">
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-center">${titulo}</h3>
                 </div>
                 <div class="card-body">
                     <form action="${pageContext.servletContext.contextPath}/main">
-                        <input type="hidden" name="page" value="grafico_productos_mas_vendidos"/>
+                        <input type="hidden" name="page" value="grafico_ventas_por_mes"/>
                         <div class="form-group mb-4">
                             <label for="anio" class="form-label">Año:</label>
                             <input name="anio" class="form-control" placeholder="Ingrese el año" value="${graficoDto.getAnio()}"/>
@@ -46,9 +46,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             <div class="text-center">
-                <h2>Productos más vendidos del año ${graficoDto.getAnio()}</h2>
+                <h2>Ventas por mes del año ${graficoDto.getAnio()}</h2>
                 <div>
                     <canvas id="myChart"></canvas>
                 </div>

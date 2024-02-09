@@ -37,7 +37,6 @@ com/nanoka/weblibreria/models/Producto$ProductoBuilder.class
 com/nanoka/weblibreria/models/PrecioProducto$PrecioProductoBuilder.class
 com/nanoka/weblibreria/dto/RespuestaDto$RespuestaDtoBuilder.class
 com/nanoka/weblibreria/services/ProductoService.class
-com/nanoka/weblibreria/interfaces/IInventariable.class
 com/nanoka/weblibreria/dao/VentaDtoDao.class
 com/nanoka/weblibreria/dao/UnidadMedidaDao.class
 com/nanoka/weblibreria/dao/PrecioProductoDao.class

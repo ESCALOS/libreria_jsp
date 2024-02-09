@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class VentaDtoDao extends Conexion implements IDao<VentaDto>{
+public class VentaDtoDao extends Conexion implements IDao<VentaDto> {
 
     @Override
     public ArrayList<VentaDto> obtenerTodos() {
@@ -57,15 +57,17 @@ public class VentaDtoDao extends Conexion implements IDao<VentaDto>{
             this.getCon().setAutoCommit(false);
             int ventaId = insertarVenta(this.getCon(), venta);
             for (DetalleVentaDto detalleVentaDto : venta.getDetallesVenta()) {
-                insertarDetalleVenta(this.getCon(), detalleVentaDto,ventaId);
+                if (detalleVentaDto.getCantidad() > 0) {
+                    insertarDetalleVenta(this.getCon(), detalleVentaDto, ventaId);
+                }
             }
             this.getCon().commit();
             error = false;
             icon = "success";
             mensaje = "Venta registrada";
         } catch (SQLException e) {
-            System.out.println("Error al insertar: "+ e.getMessage());
-            mensaje = "Error al insertar: "+ e.getMessage();
+            System.out.println("Error al insertar: " + e.getMessage());
+            mensaje = "Error al insertar: " + e.getMessage();
         }
         return RespuestaDto.builder().error(error).icon(icon).mensaje(mensaje).build();
     }
@@ -79,6 +81,7 @@ public class VentaDtoDao extends Conexion implements IDao<VentaDto>{
     public RespuestaDto eliminar(VentaDto entidad) {
         return RespuestaDto.builder().error(false).icon("warning").mensaje("no soportado").build();
     }
+
     private static int insertarVenta(Connection conexion, VentaDto venta) throws SQLException {
         String sql = "INSERT INTO Venta (total, cliente_id) VALUES (?, ?)";
         try {

@@ -154,7 +154,7 @@ function nuevoProducto() {
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="cantidad${contador}" class="form-label">Cantidad</label>
-                            <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control" min="1" oninput="calcularSubtotal(${contador})" value="1"/>
+                            <input type="number" name="cantidad${contador}" id="cantidad${contador}" class="form-control" min="0" oninput="calcularSubtotal(${contador})" value="1"/>
                         </div>
                     </div>
                     <div class="col-sm-3">
